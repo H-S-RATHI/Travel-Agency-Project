@@ -27,7 +27,7 @@
 .sticky__header{
     width: 100%;
     height: 80px;
-    line-height: 80;
+    line-height: 80px;
     background: #fff;
     position: sticky;
     top: 0;
