@@ -144,7 +144,7 @@ const Home = () => {
       {/*================== Testimonial section start  =============== */}
       <section>
         <Row>
-          <Col lg="12">
+          <Col lg="6 ">
             <Subtitle subtitle={"Fans Love"} />
             <h2 className="testimonial__title">What our fans say about us</h2>
           </Col>
