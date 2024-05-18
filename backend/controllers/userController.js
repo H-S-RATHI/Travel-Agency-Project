@@ -30,11 +30,11 @@ export const updateUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Successfully updated",
-      data: UpdatedUser,
+      data: updatedUser,
     });
   } catch (err) {
     res.status(500).json({
-      success: true,
+      success: false,
       message: "failed to update. Try again",
     });
   }
@@ -51,7 +51,7 @@ export const deleteUser = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      success: true,
+      success: false,
       message: "failed to delete. Try again",
     });
   }
@@ -69,7 +69,7 @@ export const getSingleUser = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      success: true,
+      success: false,
       message: "Not Found",
     });
   }
@@ -78,7 +78,7 @@ export const getSingleUser = async (req, res) => {
 //Get ALL Users
 export const getAllUser = async (req, res) => {
   try {
-    const users = await User.find({})
+    const users = await User.find({});
     res.status(200).json({
       success: true,
       message: "Successful",
@@ -86,7 +86,7 @@ export const getAllUser = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      success: true,
+      success: false,
       count: users.length,
       message: "Not Found",
     });

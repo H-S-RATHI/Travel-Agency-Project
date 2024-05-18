@@ -3,24 +3,23 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
-  try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
+  try {
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      password: hash,
       photo: req.body.photo,
     });
 
     await newUser.save();
-    res
-      .status(200)
-      .json({ success: true, message: "Successfully created", data: newUser });
+    res.status(200).json({ success: true, message: "Successfully created" });
   } catch (error) {
     res
       .status(500)
-      .json({ success: false, message: "Failed to create. Try again" });
+          .json({ success: false, message: "Failed to create. Try again" });
+      console.log(error)
   }
 };
 
@@ -51,7 +50,7 @@ export const login = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "15d" }
     );
 
     res

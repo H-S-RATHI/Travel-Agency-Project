@@ -30,11 +30,11 @@ export const updateTour = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Successfully updated",
-      data: UpdatedTour,
+      data: updatedTour,
     });
   } catch (err) {
     res.status(500).json({
-      success: true,
+      success: false,
       message: "failed to update. Try again",
     });
   }
@@ -51,7 +51,7 @@ export const deleteTour = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({
-      success: true,
+      success: false,
       message: "failed to delete. Try again",
     });
   }
@@ -64,13 +64,12 @@ export const getSingleTour = async (req, res) => {
     const tour = await Tour.findById(id).populate("reviews");
     res.status(200).json({
       success: true,
-      count: tour.length,
-      message: "Successfully ",
+      message: "Successfully fetched",
       data: tour,
     });
   } catch (err) {
     res.status(404).json({
-      success: true,
+      success: false,
       message: "Not Found",
     });
   }
@@ -78,21 +77,18 @@ export const getSingleTour = async (req, res) => {
 
 //Get ALL Tours
 export const getAllTour = async (req, res) => {
-  const page = parseInt(req.params.page);
+  const page = parseInt(req.query.page);
   try {
-    const tours = await Tour.find({})
-      .populate("reviews")
-      .skip(page * 8)
-      .limit(8);
+    const tours = await Tour.find({}).populate("reviews").skip(page).limit(8);
     res.status(200).json({
       success: true,
+      count: tours.length,
       message: "Successful",
       data: tours,
     });
   } catch (err) {
     res.status(404).json({
-      success: true,
-      count: tours.length,
+      success: false,
       message: "Not Found",
     });
   }
@@ -100,7 +96,7 @@ export const getAllTour = async (req, res) => {
 
 //get tour search
 
-export const getAllTourBySearch = async (req, res) => {
+export const getTourBySearch = async (req, res) => {
   const city = new RegExp(req.query.city, "i");
   const distance = parseInt(req.query.distance);
   const maxGroupSize = parseInt(req.query.maxGroupSize);
@@ -117,7 +113,7 @@ export const getAllTourBySearch = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      success: true,
+      success: false,
       message: "Not Found",
     });
   }
@@ -127,7 +123,8 @@ export const getAllTourBySearch = async (req, res) => {
 export const getFeaturedTour = async (req, res) => {
   const page = parseInt(req.params.page);
   try {
-    const tours = await Tour.find({}).populate("reviews")
+    const tours = await Tour.find({ featured: true })
+      .populate("reviews")
       .limit(8);
     res.status(200).json({
       success: true,
@@ -136,9 +133,9 @@ export const getFeaturedTour = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      success: true,
+      success: false,
       count: tours.length,
-      message: "Not Found",
+      message: "Not Found------------",
     });
   }
 };
@@ -153,7 +150,7 @@ export const getTourCount = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      success: true,
+      success: false,
       message: "Failed to fetch. Try again",
     });
   }

@@ -44,7 +44,7 @@ const Home = () => {
               </div>
             </Col>
             <Col lg="2">
-              <div className="hero__img-box mt-4">
+              <div className="hero__img-box hero__video-box mt-4">
                 <video src={heroVideo} alt="" controls />
               </div>
             </Col>
@@ -146,7 +146,9 @@ const Home = () => {
         <Row>
           <Col lg="6 ">
             <Subtitle subtitle={"Fans Love"} />
-            <h2 className="testimonial__title">What our fans say about us</h2>
+            <h2 className="testimonial__title p-40">
+              What our fans say about us
+            </h2>
           </Col>
           <Testimonials />
         </Row>
